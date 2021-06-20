@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SliderComponent from "Components/SliderComponent";
+import City from "Components/City";
 
 const TagContainer = styled.div`
   width: 90%;
@@ -15,7 +16,7 @@ const TagContainer = styled.div`
 const TagItems = styled.span`
   background: ${(props) => (props.current ? "blue" : "#f8f9fa")};
   color: ${(props) => (props.current ? "white" : "#707070")};
-  box-shadow: 6px 6px 6px #dfe0e1, -6px -6px 6px #ffffff;
+  box-shadow: 4px 4px 4px #dfe0e1, -4px -4px 4px #ffffff;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
   text-align: center;
@@ -37,7 +38,7 @@ const UL = styled.ul`
   width: 100%;
 `;
 
-const HomePresenter = ({ tagList, sliderImgs, selectedTag }) => {
+const HomePresenter = ({ tagList, sliderImgs, selectedTag, result }) => {
   return (
     <>
       <SliderComponent sliderImgs={sliderImgs} />
@@ -50,7 +51,8 @@ const HomePresenter = ({ tagList, sliderImgs, selectedTag }) => {
           ))}
         </UL>
       </TagContainer>
-      <h1>{`선택된 태그 : ${selectedTag} `}</h1>
+
+      {result && result !== null ? <City result={result} /> : "Nothing selected"}
     </>
   );
 };

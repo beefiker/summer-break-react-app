@@ -44,7 +44,7 @@ const SliderComponent = ({ sliderImgs }) => {
       <Carousel>
         <Slider {...settings}>
           {sliderImgs.map((item, index) => (
-            <img src={`${item}`} alt={`${item}`} key={`${index}`} />
+            <img src={item} alt={item} key={index} />
           ))}
         </Slider>
       </Carousel>
