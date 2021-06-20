@@ -1,11 +1,11 @@
-// import * as config from "../../config";
+const db_config = require("./db-config.json");
 
 const mysql = require("mysql");
 const db = mysql.createPool({
-  host: config.DB_HOST,
-  user: config.DB_USERID,
-  password: config.DB_PASSWORD,
-  database: config.DB_NAME,
+  host: db_config.host,
+  user: db_config.user,
+  password: db_config.password,
+  database: db_config.database,
   multipleStatements: true,
   typeCast: function (field, next) {
     if (field.type == "VAR_STRING") {
