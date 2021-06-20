@@ -1,9 +1,10 @@
 import React from "react";
 
-const City = ({ result }) => {
+const City = ({ name, imgsrc }) => {
   return (
     <div>
-      <h1>{result && result !== null ? `선택태그 : ${result}` : `none`}</h1>
+      <h1>{name && name !== null && `${name}`}</h1>
+      <img src={imgsrc} />
     </div>
   );
 };

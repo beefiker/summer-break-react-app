@@ -19,9 +19,24 @@ app.get("/", cors(), (req, res) => {
   res.send("hello route / ");
 });
 
-app.get("/api/test", cors(), (req, res) => {
+app.get("/api/all", cors(), (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  db.query("SELECT * FROM travel_test", (err, data) => {
+  db.query("SELECT * FROM travel_test order by rating desc", (err, data) => {
+    if (!err) res.send({ data });
+    else res.send(err);
+  });
+});
+
+app.get("/api/city/:id", cors(), (req, res) => {
+  db.query("SELECT * FROM travel_test where tag like '%" + req.params.id + "%' order by rating desc", (err, data) => {
+    if (!err) res.send({ data });
+    else res.send(err);
+  });
+});
+
+app.get("/api/tags", cors(), (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  db.query("SELECT tag_name FROM travel_taglist", (err, data) => {
     if (!err) res.send({ data });
     else res.send(err);
   });

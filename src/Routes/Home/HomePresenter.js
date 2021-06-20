@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import SliderComponent from "Components/SliderComponent";
 import City from "Components/City";
@@ -45,16 +45,18 @@ const HomePresenter = ({ tagList, sliderImgs, selectedTag, result }) => {
       <TagContainer>
         <UL>
           {tagList.map((item, index) => (
-            <Link to={`/tag/${item}`} key={`${index}`}>
-              <TagItems current={selectedTag === item}>{item}</TagItems>
+            <Link to={selectedTag === item ? `/` : `/tag/${item}`} key={`${index}`}>
+              <TagItems current={selectedTag == item}>{item}</TagItems>
             </Link>
           ))}
         </UL>
       </TagContainer>
 
-      {result && result !== null ? <City result={result} /> : "Nothing selected"}
+      {result && result !== null
+        ? result.map((item, index) => <City key={index} imgsrc={item.imgsrc} name={item.name} />)
+        : "nothing"}
     </>
   );
 };
 
-export default HomePresenter;
+export default withRouter(HomePresenter);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { withRouter } from "react-router-dom";
-import { cityApi } from "api";
+import { cityApi, tagApi } from "api";
 
 const HomeContainer = (props) => {
   const {
@@ -10,18 +10,20 @@ const HomeContainer = (props) => {
     },
   } = props;
 
-  const [tagList, setTagList] = useState([
-    "Europe",
-    "Asia",
-    "Africa",
-    "America",
-    "Oceania",
-    "South-Korea",
-    "North-Korea",
-    "Bangkok",
-    "Anywhere",
-    "Somewhere",
-  ]);
+  const [tagList, setTagList] = useState([]);
+
+  const getTags = async () => {
+    const {
+      data: { data },
+    } = await tagApi.getAllTags();
+    let result = data.map((item) => Object.values(item));
+    setTagList(result);
+  };
+
+  useEffect(() => {
+    getTags();
+  }, []);
+
   const [sliderImgs, setSliderImgs] = useState([
     "https://placeimg.com/1640/500/any",
     "https://placeimg.com/1640/500/any",
@@ -38,11 +40,18 @@ const HomeContainer = (props) => {
 
     const fetchData = async () => {
       try {
-        const {
-          data: { data: given },
-        } = await cityApi.test();
-        setResult(given);
-        console.table(given);
+        if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
+          const {
+            data: { data: given },
+          } = await cityApi.getSelectedCities(selectedTag);
+          setResult(given);
+        } else {
+          const {
+            data: { data: given },
+          } = await cityApi.getAll();
+          setResult(given);
+        }
+        console.table(result);
       } catch {
         setError("Nothing found");
       } finally {

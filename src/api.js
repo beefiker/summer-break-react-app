@@ -5,5 +5,10 @@ const api = axios.create({
 });
 
 export const cityApi = {
-  test: () => api.get("test"),
+  getAll: () => api.get(`all`),
+  getSelectedCities: (tag) => api.get(`city/${tag}`),
+};
+
+export const tagApi = {
+  getAllTags: () => api.get(`tags`),
 };
