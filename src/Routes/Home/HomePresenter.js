@@ -2,67 +2,55 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Slider from "react-slick";
+import SliderComponent from "Components/SliderComponent";
 
-const Carousel = styled.div`
+const TagContainer = styled.div`
   width: 90%;
-  margin: 5% auto;
-
-  .slick-arrow {
-    z-index: 11;
-    transform: scale(1.8);
-  }
-  .slick-prev:before {
-    opacity: 1;
-    color: black;
-    content: "<";
-    font-weight: bold;
-    text-shadow: 1px 1px 2px gray;
-  }
-  .slick-next:before {
-    opacity: 1;
-    color: black;
-    content: ">";
-    font-weight: bold;
-    text-shadow: 1px 1px 2px gray;
-  }
-  border-radius: 10px;
-
-  /* border-radius: 20px; */
-  /* box-shadow: 0px 1px 7px 3px rgba(0, 0, 0, 0.4); */
+  height: 20%;
+  margin: 0 5% 0 5%;
+  display: flex;
+  min-height: 100px;
 `;
 
-const HomePresenter = (props) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-  };
+const TagItems = styled.span`
+  background: ${(props) => (props.current ? "blue" : "#f8f9fa")};
+  color: ${(props) => (props.current ? "white" : "#707070")};
+  box-shadow: 6px 6px 6px #dfe0e1, -6px -6px 6px #ffffff;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  text-align: center;
+  float: left;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  margin: 0.3rem;
+  font-size: 0.8rem;
+  transition: all 0.2s linear;
+  overflow: hidden;
 
-  const data = [
-    "https://placeimg.com/640/200/any",
-    "https://placeimg.com/640/200/any",
-    "https://placeimg.com/640/200/any",
-    "https://placeimg.com/640/200/any",
-  ];
+  &:hover {
+    background: #e9ecef;
+    color: #707070;
+  }
+`;
+
+const UL = styled.ul`
+  width: 100%;
+`;
+
+const HomePresenter = ({ tagList, sliderImgs, selectedTag }) => {
   return (
     <>
-      <Carousel>
-        <Slider {...settings}>
-          {data.map((item) => (
-            <img src={`${item}`} alt="" srcset="" />
+      <SliderComponent sliderImgs={sliderImgs} />
+      <TagContainer>
+        <UL>
+          {tagList.map((item, index) => (
+            <Link to={`/tag/${item}`} key={`${index}`}>
+              <TagItems current={selectedTag === item}>{item}</TagItems>
+            </Link>
           ))}
-        </Slider>
-      </Carousel>
-      <img src="" alt="" srcset="" />
-      <Link to={`/account`}>
-        <h1>Go to Account</h1>{" "}
-      </Link>
+        </UL>
+      </TagContainer>
+      <h1>{`선택된 태그 : ${selectedTag} `}</h1>
     </>
   );
 };

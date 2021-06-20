@@ -54,7 +54,7 @@ const Header = ({ location: { pathname } }) => {
         <SLink to="/">Logo</SLink>
       </Logo>
       <List>
-        <Item current={pathname === "/account"}>
+        <Item current={pathname === "/login"}>
           <SLink to="/login">Login</SLink>
         </Item>
         <Item current={pathname === "/register"}>
