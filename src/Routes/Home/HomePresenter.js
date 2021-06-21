@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import SliderComponent from "Components/SliderComponent";
+import Section from "Components/Section";
 import City from "Components/City";
+import Loader from "Components/Loader";
+import Message from "Components/Message";
+import Helmet from "react-helmet";
 
 const TagContainer = styled.div`
   width: 90%;
@@ -14,7 +18,7 @@ const TagContainer = styled.div`
 `;
 
 const TagItems = styled.span`
-  background: ${(props) => (props.current ? "blue" : "#f8f9fa")};
+  background: ${(props) => (props.current ? "gray" : "#f8f9fa")};
   color: ${(props) => (props.current ? "white" : "#707070")};
   box-shadow: 4px 4px 4px #dfe0e1, -4px -4px 4px #ffffff;
   display: grid;
@@ -38,25 +42,37 @@ const UL = styled.ul`
   width: 100%;
 `;
 
-const HomePresenter = ({ tagList, sliderImgs, selectedTag, result }) => {
-  return (
-    <>
-      <SliderComponent sliderImgs={sliderImgs} />
-      <TagContainer>
-        <UL>
-          {tagList.map((item, index) => (
-            <Link to={selectedTag === item ? `/` : `/tag/${item}`} key={`${index}`}>
-              <TagItems current={selectedTag == item}>{item}</TagItems>
-            </Link>
-          ))}
-        </UL>
-      </TagContainer>
-
-      {result && result !== null
-        ? result.map((item, index) => <City key={index} imgsrc={item.imgsrc} name={item.name} />)
-        : "nothing"}
-    </>
-  );
-};
+const HomePresenter = ({ loading, tagList, sliderImgs, selectedTag, result }) => (
+  <>
+    <Helmet>
+      <title>TraBee | Home</title>
+    </Helmet>
+    {loading ? (
+      <Loader />
+    ) : (
+      <>
+        <SliderComponent sliderImgs={sliderImgs} />
+        <TagContainer>
+          <UL>
+            {tagList.map((item, index) => (
+              <Link to={selectedTag == item ? `/` : `/tag/${item}`} key={`${index}`}>
+                <TagItems current={selectedTag == item}>{item}</TagItems>
+              </Link>
+            ))}
+          </UL>
+        </TagContainer>
+        <Section>
+          {result && result !== null && result.length > 0 ? (
+            result.map((item, index) => <City key={index} imgsrc={item.imgsrc} name={item.cityname} />)
+          ) : result.length == 0 ? (
+            <Message msg={`No Cities are available`} />
+          ) : (
+            ""
+          )}
+        </Section>
+      </>
+    )}
+  </>
+);
 
 export default withRouter(HomePresenter);

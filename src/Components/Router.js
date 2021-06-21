@@ -6,6 +6,7 @@ import Login from "Routes/Login";
 import Register from "Routes/Register";
 import Notice from "Routes/Notice";
 import Detail from "Routes/Detail";
+import Search from "Routes/Search";
 
 const reactRouter = () => {
   return (
@@ -19,6 +20,8 @@ const reactRouter = () => {
           <Route path="/register" component={Register} />
           <Route path="/notice" component={Notice} />
           <Route path="/detail/:id" component={Detail} />
+          <Route path="/search" component={Search} />
+          <Route path="/search/:id" component={Search} />
           <Redirect from="*" to="/" />
         </Switch>
       </>

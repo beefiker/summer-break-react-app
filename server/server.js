@@ -21,17 +21,36 @@ app.get("/", cors(), (req, res) => {
 
 app.get("/api/all", cors(), (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  db.query("SELECT * FROM travel_test order by rating desc", (err, data) => {
+  db.query("SELECT * FROM travel_city order by rating desc", (err, data) => {
     if (!err) res.send({ data });
     else res.send(err);
   });
 });
 
 app.get("/api/city/:id", cors(), (req, res) => {
-  db.query("SELECT * FROM travel_test where tag like '%" + req.params.id + "%' order by rating desc", (err, data) => {
-    if (!err) res.send({ data });
-    else res.send(err);
-  });
+  db.query(
+    "SELECT * FROM travel_city tc, travel_taglist tl where tc.tag_id = tl.tag_id and tl.tag_name like '%" +
+      req.params.id +
+      "%' order by tc.rating desc",
+    (err, data) => {
+      if (!err) res.send({ data });
+      else res.send(err);
+    }
+  );
+});
+
+app.get("/api/search/:id", cors(), (req, res) => {
+  db.query(
+    "SELECT * FROM travel_city tc, travel_taglist tl where (tc.tag_id = tl.tag_id) and (tl.tag_name like '%" +
+      req.params.id +
+      "%' OR tc.cityname like '%" +
+      req.params.id +
+      "%'); ",
+    (err, data) => {
+      if (!err) res.send({ data });
+      else res.send(err);
+    }
+  );
 });
 
 app.get("/api/tags", cors(), (req, res) => {

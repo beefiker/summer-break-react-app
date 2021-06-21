@@ -6,3 +6,4 @@
 - Detail
 - Reservation || pay
 - Notice
+- Search

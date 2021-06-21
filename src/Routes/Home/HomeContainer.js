@@ -11,19 +11,6 @@ const HomeContainer = (props) => {
   } = props;
 
   const [tagList, setTagList] = useState([]);
-
-  const getTags = async () => {
-    const {
-      data: { data },
-    } = await tagApi.getAllTags();
-    let result = data.map((item) => Object.values(item));
-    setTagList(result);
-  };
-
-  useEffect(() => {
-    getTags();
-  }, []);
-
   const [sliderImgs, setSliderImgs] = useState([
     "https://placeimg.com/1640/500/any",
     "https://placeimg.com/1640/500/any",
@@ -31,10 +18,21 @@ const HomeContainer = (props) => {
     "https://placeimg.com/1640/500/any",
     "https://placeimg.com/1640/500/any",
   ]);
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState([]);
+
+  const getTags = async () => {
+    const {
+      data: { data: tags },
+    } = await tagApi.getAllTags();
+    let result = tags.map((item) => Object.values(item));
+    setTagList(result);
+  };
+
+  useEffect(() => {
+    getTags();
+  }, []);
   useEffect(() => {
     console.log(`Query with ${selectedTag}`);
 
@@ -42,14 +40,14 @@ const HomeContainer = (props) => {
       try {
         if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
           const {
-            data: { data: given },
+            data: { data: cities },
           } = await cityApi.getSelectedCities(selectedTag);
-          setResult(given);
+          setResult(cities);
         } else {
           const {
-            data: { data: given },
+            data: { data: cities },
           } = await cityApi.getAll();
-          setResult(given);
+          setResult(cities);
         }
         console.table(result);
       } catch {
@@ -64,7 +62,13 @@ const HomeContainer = (props) => {
   }, [selectedTag]);
   return (
     <>
-      <HomePresenter tagList={tagList} sliderImgs={sliderImgs} selectedTag={selectedTag} result={result} />
+      <HomePresenter
+        loading={loading}
+        tagList={tagList}
+        sliderImgs={sliderImgs}
+        selectedTag={selectedTag}
+        result={result}
+      />
     </>
   );
 };
