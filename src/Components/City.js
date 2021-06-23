@@ -13,9 +13,10 @@ const Image = styled.div`
   width: 150px;
   height: 125px;
   background-size: cover;
-  border-radius: 25px;
+  border-radius: 1rem;
   background-position: center center;
   background-image: url(${(props) => props.bgUrl});
+  margin-bottom: 1rem;
 `;
 
 const City = ({ name, imgsrc }) => {

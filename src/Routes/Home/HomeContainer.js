@@ -29,36 +29,30 @@ const HomeContainer = (props) => {
     let result = tags.map((item) => Object.values(item));
     setTagList(result);
   };
-
+  const fetchData = async () => {
+    try {
+      if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
+        const {
+          data: { data: cities },
+        } = await cityApi.getSelectedCities(selectedTag);
+        setResult(cities);
+      } else {
+        const {
+          data: { data: cities },
+        } = await cityApi.getAll();
+        setResult(cities);
+      }
+    } catch {
+      setError("Nothing found");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     getTags();
   }, []);
   useEffect(() => {
-    console.log(`Query with ${selectedTag}`);
-
-    const fetchData = async () => {
-      try {
-        if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
-          const {
-            data: { data: cities },
-          } = await cityApi.getSelectedCities(selectedTag);
-          setResult(cities);
-        } else {
-          const {
-            data: { data: cities },
-          } = await cityApi.getAll();
-          setResult(cities);
-        }
-        console.table(result);
-      } catch {
-        setError("Nothing found");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchData();
-    // setResult(selectedTag);
-    // axios로 selectedTag에 대한 값 받아서 setResult state 세팅
   }, [selectedTag]);
   return (
     <>

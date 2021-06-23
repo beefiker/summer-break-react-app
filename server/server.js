@@ -27,6 +27,14 @@ app.get("/api/all", cors(), (req, res) => {
   });
 });
 
+app.get("/api/tags", cors(), (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  db.query("SELECT tag_name FROM travel_taglist", (err, data) => {
+    if (!err) res.send({ data });
+    else res.send(err);
+  });
+});
+
 app.get("/api/city/:id", cors(), (req, res) => {
   db.query(
     "SELECT * FROM travel_city tc, travel_taglist tl where tc.tag_id = tl.tag_id and tl.tag_name like '%" +
@@ -53,9 +61,8 @@ app.get("/api/search/:id", cors(), (req, res) => {
   );
 });
 
-app.get("/api/tags", cors(), (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  db.query("SELECT tag_name FROM travel_taglist", (err, data) => {
+app.get("/api/detail/:id", cors(), (req, res) => {
+  db.query("SELECT * FROM travel_city where cityname = ?", [req.params.id], (err, data) => {
     if (!err) res.send({ data });
     else res.send(err);
   });

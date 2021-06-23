@@ -5,9 +5,8 @@ import styled from "styled-components";
 const Carousel = styled.div`
   width: 90%;
   margin: 5% auto;
-
   .slick-arrow {
-    z-index: 11;
+    z-index: 1;
     transform: scale(2);
   }
   .slick-prev:before {
@@ -24,7 +23,10 @@ const Carousel = styled.div`
     font-weight: 900;
     text-shadow: 1px 1px 2px #caccce, -1px -1px 1px #ffffff;
   }
-  border-radius: 10px;
+  .slick-dots > li > * {
+    width: 100px;
+  }
+
   /* box-shadow: 0px 1px 7px 3px rgba(0, 0, 0, 0.4); */
 `;
 
@@ -33,8 +35,8 @@ const SliderComponent = ({ sliderImgs }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    slidesToShow: true,
+    slidesToScroll: true,
     autoplay: true,
     autoplaySpeed: 3000,
     pauseOnHover: true,

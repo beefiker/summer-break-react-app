@@ -13,7 +13,7 @@ const MyHeader = styled.header`
   align-items: center;
   background-color: #f2f3f7;
   box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.4);
-  z-index: 9;
+  z-index: 19;
 `;
 
 const List = styled.ul`
@@ -54,9 +54,6 @@ const Header = ({ location: { pathname } }) => {
         <SLink to="/">Logo</SLink>
       </Logo>
       <List>
-        <Item current={pathname === "/search"}>
-          <SLink to="/search">Search</SLink>
-        </Item>
         <Item current={pathname === "/login"}>
           <SLink to="/login">Login</SLink>
         </Item>
@@ -65,6 +62,9 @@ const Header = ({ location: { pathname } }) => {
         </Item>
         <Item current={pathname === "/notice"}>
           <SLink to="/notice">notice</SLink>
+        </Item>
+        <Item current={pathname === "/search"}>
+          <SLink to="/search">Search</SLink>
         </Item>
       </List>
     </MyHeader>

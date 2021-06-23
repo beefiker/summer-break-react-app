@@ -8,6 +8,7 @@ export const cityApi = {
   getAll: () => api.get(`all`),
   getSelectedCities: (tag) => api.get(`city/${tag}`),
   getSearchedCities: (term) => api.get(`search/${term}`),
+  getDetail: (cityname) => api.get(`detail/${cityname}`),
 };
 
 export const tagApi = {

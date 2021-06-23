@@ -7,12 +7,13 @@ import Section from "Components/Section";
 import City from "Components/City";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
-import Helmet from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import Title from "Components/Title";
 
 const TagContainer = styled.div`
   width: 90%;
   height: 20%;
-  margin: 0 5% 0 5%;
+  margin: 10% 5% 0 5%;
   display: flex;
   min-height: 100px;
 `;
@@ -44,9 +45,7 @@ const UL = styled.ul`
 
 const HomePresenter = ({ loading, tagList, sliderImgs, selectedTag, result }) => (
   <>
-    <Helmet>
-      <title>TraBee | Home</title>
-    </Helmet>
+    <Title titleName={`TraBee | Home ${selectedTag ? `: ${selectedTag}` : ""}`} />
     {loading ? (
       <Loader />
     ) : (
@@ -63,11 +62,13 @@ const HomePresenter = ({ loading, tagList, sliderImgs, selectedTag, result }) =>
         </TagContainer>
         <Section>
           {result && result !== null && result.length > 0 ? (
-            result.map((item, index) => <City key={index} imgsrc={item.imgsrc} name={item.cityname} />)
-          ) : result.length == 0 ? (
-            <Message msg={`No Cities are available`} />
+            result.map((item, index) => (
+              <Link to={`/detail/${item.cityname}`} key={index}>
+                <City imgsrc={item.imgsrc} name={item.cityname} />
+              </Link>
+            ))
           ) : (
-            ""
+            <Message msg={`No cities with selected tag`} />
           )}
         </Section>
       </>
