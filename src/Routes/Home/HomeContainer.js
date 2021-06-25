@@ -29,29 +29,29 @@ const HomeContainer = (props) => {
     let result = tags.map((item) => Object.values(item));
     setTagList(result);
   };
-  const fetchData = async () => {
-    try {
-      if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
-        const {
-          data: { data: cities },
-        } = await cityApi.getSelectedCities(selectedTag);
-        setResult(cities);
-      } else {
-        const {
-          data: { data: cities },
-        } = await cityApi.getAll();
-        setResult(cities);
-      }
-    } catch {
-      setError("Nothing found");
-    } finally {
-      setLoading(false);
-    }
-  };
   useEffect(() => {
     getTags();
   }, []);
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (selectedTag && selectedTag !== null && selectedTag.length > 0) {
+          const {
+            data: { data: cities },
+          } = await cityApi.getSelectedCities(selectedTag);
+          setResult(cities);
+        } else {
+          const {
+            data: { data: cities },
+          } = await cityApi.getAll();
+          setResult(cities);
+        }
+      } catch {
+        setError("Nothing found");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, [selectedTag]);
   return (
@@ -62,6 +62,7 @@ const HomeContainer = (props) => {
         sliderImgs={sliderImgs}
         selectedTag={selectedTag}
         result={result}
+        error={error}
       />
     </>
   );

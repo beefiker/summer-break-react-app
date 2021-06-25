@@ -14,14 +14,14 @@ const Carousel = styled.div`
     color: #f1f3f5;
     content: "<";
     font-weight: 900;
-    text-shadow: 1px 1px 2px #caccce, -1px -1px 1px #ffffff;
+    text-shadow: 1px 1px 2px #868e96, -1px -1px 1px #ffffff;
   }
   .slick-next:before {
     opacity: 1;
     color: #f1f3f5;
     content: ">";
     font-weight: 900;
-    text-shadow: 1px 1px 2px #caccce, -1px -1px 1px #ffffff;
+    text-shadow: 1px 1px 2px #868e96, -1px -1px 1px #ffffff;
   }
   .slick-dots > li > * {
     width: 100px;

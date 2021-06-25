@@ -13,20 +13,19 @@ const DetailContainer = (props) => {
     },
   } = props;
 
-  const fetchData = async () => {
-    try {
-      const {
-        data: { data: info },
-      } = await cityApi.getDetail(selectedCity);
-      setResult(info);
-    } catch {
-      setError("No info");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {
+          data: { data: info },
+        } = await cityApi.getDetail(selectedCity);
+        setResult(info);
+      } catch {
+        setError("No info");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
   }, []);
 

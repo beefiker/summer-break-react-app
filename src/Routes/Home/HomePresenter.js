@@ -7,7 +7,6 @@ import Section from "Components/Section";
 import City from "Components/City";
 import Loader from "Components/Loader";
 import Message from "Components/Message";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 import Title from "Components/Title";
 
 const TagContainer = styled.div`

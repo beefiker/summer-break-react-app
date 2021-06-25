@@ -10,11 +10,11 @@ const DetailPresenter = ({ pathname, loading, result }) => (
     ) : (
       <>
         {result &&
-          result.map((item) => (
-            <>
+          result.map((item, index) => (
+            <div key={index}>
               <h1>{`Rating : ${item.rating}`}</h1>
               <h1>{`Description : ${item.description}`}</h1>
-            </>
+            </div>
           ))}
       </>
     )}
